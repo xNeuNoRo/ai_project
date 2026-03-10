@@ -1,0 +1,52 @@
+# Entorno virtual
+.venv/
+venv/
+env/
+ENV/
+
+# direnv / variables locales
+.env
+.env.*
+.envrc
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Type check / lint caches
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+
+# Builds / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# IDE / editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Archivos generados del análisis
+outputs/graficos/*
+outputs/reportes/*
+
+# Datos locales o sensibles
+data/raw/*
+data/clean/*
