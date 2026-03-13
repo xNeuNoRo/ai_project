@@ -1,6 +1,6 @@
 # Importamos matplotlib para visualización y la ruta del directorio de gráficos GRAFICOS_DIR
-
-import matplotlib.pyplot as plt
+from typing import Any
+from matplotlib.figure import Figure
 from src.config import GRAFICOS_DIR
 import pandas as pd
 
@@ -12,15 +12,15 @@ def bar_chart_counts(df: pd.DataFrame, column_name: str, file_name: str) -> None
         return
     # Obtenemos la cantidad de registros por cada valor único en la columna especificada utilizando value_counts()
     counts = df[column_name].value_counts()
-    # con plt.figure(figsize=(10, 6)) establecemos el tamaño de la figura para que sea más legible 10 de ancho y 6 de alto
-    plt.figure(figsize=(10, 6))
+    # Creamos una figura tipada con tamaño de 10x6 para evitar errores de tipado con pyplot
+    fig = Figure(figsize=(10, 6))
+    ax: Any = fig.add_subplot(111)
     # counts.plot(kind="bar") crea un gráfico de barras a partir de las cantidades obtenidas con value_counts()
-    counts.plot(kind="bar")
+    counts.plot(kind="bar", ax=ax)
     # Agregamos título y etiquetas a los ejes para mejorar la legibilidad del gráfico
-    plt.title(f"Cantidad por {column_name}") # Título del gráfico que indica qué se está mostrando
-    plt.xlabel(column_name) # Etiqueta del eje x que indica la categoría o valor único de la columna
-    plt.ylabel("Cantidad") # Etiqueta del eje y que indica la cantidad de registros para cada categoría
+    ax.set_title(f"Cantidad por {column_name}") # Título del gráfico que indica qué se está mostrando
+    ax.set_xlabel(column_name) # Etiqueta del eje x que indica la categoría o valor único de la columna
+    ax.set_ylabel("Cantidad") # Etiqueta del eje y que indica la cantidad de registros para cada categoría
     # Ajustamos el diseño para evitar que las etiquetas se sobrepongan unas con otras y guardamos el gráfico en la ruta especificada por GRAFICOS_DIR con el nombre de archivo proporcionado
-    plt.tight_layout() 
-    plt.savefig(GRAFICOS_DIR / file_name)
-    plt.close()
+    fig.tight_layout()
+    fig.savefig(GRAFICOS_DIR / file_name) # type: ignore

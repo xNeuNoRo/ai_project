@@ -48,7 +48,9 @@ def main():
     compare_groups(df_clean, group_column="cuatrimestre", target_column="total_estudiantes")
     compare_groups(df_clean, group_column="carrera", target_column="porcentaje_femenino")
     
-    df_yearly = df_clean.groupby("año", as_index=False)["total_estudiantes"].sum()
+    df_yearly = df_clean.groupby("año", as_index=False).agg(
+        total_estudiantes=("total_estudiantes", "sum")
+    )
 
     print("\n--- TOTAL DE ESTUDIANTES POR AÑO ---")
     print(df_yearly)
