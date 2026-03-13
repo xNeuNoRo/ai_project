@@ -1,6 +1,7 @@
+import pandas as pd
 from sklearn.linear_model import LinearRegression
 
-def simple_linear_regression(df, x_column, y_column):
+def simple_linear_regression(df: pd.DataFrame, x_column: str, y_column: str) -> None:
     # Verificamos si las columnas especificadas existen en el DataFrame antes de realizar el análisis
     if x_column not in df.columns:
         print(f"Error: La columna '{x_column}' no existe en el DataFrame.")

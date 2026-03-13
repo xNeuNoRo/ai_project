@@ -1,4 +1,6 @@
-def analyze_by_career(df, career_column="carrera"):
+import pandas as pd
+
+def analyze_by_career(df: pd.DataFrame, career_column: str = "carrera") -> None:
     # Verificamos si la columna de carrera existe en el DataFrame
     if career_column not in df.columns:
         # Si la columna no existe, imprimimos un mensaje de error y salimos de la función

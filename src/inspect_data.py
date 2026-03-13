@@ -1,4 +1,6 @@
-def inspect_dataset(df):
+import pandas as pd
+
+def inspect_dataset(df: pd.DataFrame) -> None:
     print("\n--- HEADERS DEL DATASET ---")
     # Muestra las primeras filas del DataFrame 
     # para tener una vista previa de los datos

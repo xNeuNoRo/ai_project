@@ -1,4 +1,6 @@
-def descriptive_analysis(df):
+import pandas as pd
+
+def descriptive_analysis(df: pd.DataFrame) -> None:
     print("\n--- ESTADÍSTICAS NUMÉRICAS ---")
     # df.describe() devuelve estadísticas descriptivas para las columnas numéricas del DataFrame
     # Incluye conteo, media, desviación estándar, valores mínimos, percentiles y máximos

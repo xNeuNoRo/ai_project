@@ -1,8 +1,11 @@
 # Importamos matplotlib para visualización y la ruta del directorio de gráficos GRAFICOS_DIR
+
 import matplotlib.pyplot as plt
 from src.config import GRAFICOS_DIR
+import pandas as pd
 
-def bar_chart_counts(df, column_name, file_name):
+
+def bar_chart_counts(df: pd.DataFrame, column_name: str, file_name: str) -> None:
     # Verificamos si la columna existe en el DataFrame antes de intentar graficar
     if column_name not in df.columns:
         print(f"Error: La columna '{column_name}' no existe en el DataFrame.")

@@ -1,7 +1,9 @@
 # Importamos la ruta del archivo CLEAN_FILE desde config.py
 from src.config import CLEAN_FILE
 
-def clean_dataset(df):
+import pandas as pd
+
+def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
     # Creamos una copia del DataFrame original para evitar modificarlo directamente
     df = df.copy()
     
@@ -14,6 +16,6 @@ def clean_dataset(df):
     # Retornamos el DataFrame limpio para su posterior uso o guardado
     return df
 
-def save_clean_dataset(df):
+def save_clean_dataset(df: pd.DataFrame) -> None:
     # Guardamos el DataFrame limpio en un archivo CSV en la ruta especificada por CLEAN_FILE
     df.to_csv(CLEAN_FILE, index=False) # index=False para no guardar el índice del DataFrame en el CSV
