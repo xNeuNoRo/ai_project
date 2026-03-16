@@ -50,36 +50,15 @@ DIR_SALIDAS_MODELOS = DIR_OUTPUTS_MODELOS
 DIR_CUADERNOS = DIR_NOTEBOOKS
 DIR_TESTS_UNITARIOS = DIR_TESTS
 
-# ==========================================================
-# Compatibilidad temporal con el código actual
-# Estas variables permiten refactorizar por etapas sin romper
-# los módulos que todavía usan nombres anteriores.
-# ==========================================================
-
-BASE_DIR = DIR_RAIZ_PROYECTO
-
-RAW_DATA_DIR = DIR_DATOS_RAW
-INTERIM_DATA_DIR = DIR_DATOS_INTERIM
-PROCESSED_DATA_DIR = DIR_DATOS_PROCESSED
-
-# Alias temporal para no romper el código viejo
-CLEAN_DATA_DIR = DIR_DATOS_PROCESSED
-
-OUTPUTS_DIR = DIR_SALIDAS
-TABLAS_DIR = DIR_SALIDAS_TABLAS
-GRAFICOS_DIR = DIR_SALIDAS_GRAFICOS
-REPORTES_DIR = DIR_SALIDAS_REPORTES
-MODELOS_DIR = DIR_SALIDAS_MODELOS
-
 # Rutas de archivos por defecto para el dataset principal
-RAW_FILE = construir_ruta_dataset(
+RUTA_DATASET_RAW_POR_DEFECTO = construir_ruta_dataset(
     nombre_dataset=NOMBRE_DATASET_POR_DEFECTO,
     etapa="raw",
     extension=EXTENSION_DATASET_POR_DEFECTO,
 )
 
 # Ruta de archivo por defecto para el dataset limpio (processed)
-CLEAN_FILE = construir_ruta_dataset(
+RUTA_DATASET_PROCESSED_POR_DEFECTO = construir_ruta_dataset(
     nombre_dataset=f"{NOMBRE_DATASET_POR_DEFECTO}_clean",
     etapa="processed",
     extension=EXTENSION_DATASET_POR_DEFECTO,
@@ -128,7 +107,7 @@ def obtener_ruta_datos(
 
 
 # Esta función es similar a obtener_ruta_datos pero para rutas de salida, con lógica adicional para formatos por defecto según el tipo de resultado.
-def obtener_ruta_salida_config(
+def obtener_ruta_salida(
     nombre_archivo: str,
     tipo: str = "tablas",
     subcarpeta: str | None = None,
