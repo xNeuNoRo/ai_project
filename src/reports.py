@@ -188,7 +188,13 @@ def tabla_a_markdown(
     if titulo:
         partes.append(f"## {titulo}\n")
 
-    partes.append(tabla.to_markdown(index=incluir_indice))
+    try:
+        partes.append(tabla.to_markdown(index=incluir_indice))
+    except ImportError:
+        partes.append("```")
+        partes.append(tabla.to_string(index=incluir_indice))
+        partes.append("```")
+
     partes.append("")
 
     return "\n".join(partes)
