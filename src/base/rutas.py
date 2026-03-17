@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import Iterable
+import os
 
 # ===========================
 # Rutas del proyecto
@@ -14,14 +15,40 @@ from typing import Iterable
 RAIZ_PROYECTO = Path(__file__).resolve().parent.parent.parent
 
 # ===========================
+# Soporte para Google Colab / almacenamiento externo
+# ===========================
+
+# Si existe la variable de entorno AI_PROJECT_STORAGE_DIR,
+# entonces usaremos esa carpeta como base para data y outputs.
+# Esto permite que en Google Colab podamos apuntar a una carpeta de Google Drive,
+# por ejemplo:
+# /content/drive/MyDrive/ai_project_data
+#
+# Si la variable no existe, el proyecto funciona como siempre en local,
+# usando la estructura tradicional dentro del repositorio.
+STORAGE_DIR_ENV = os.getenv("AI_PROJECT_STORAGE_DIR")
+
+# Si se definió la variable de entorno, convertimos esa ruta en un Path.
+# Si no, dejamos BASE_STORAGE_DIR como la raíz del proyecto para mantener
+# el comportamiento tradicional en entorno local.
+BASE_STORAGE_DIR = Path(STORAGE_DIR_ENV) if STORAGE_DIR_ENV else RAIZ_PROYECTO
+
+# ===========================
 # Rutas de los directorios main
 # ===========================
 
 DIR_SRC = RAIZ_PROYECTO / "src"
-DIR_DATA = RAIZ_PROYECTO / "data"
-DIR_OUTPUTS = RAIZ_PROYECTO / "outputs"
 DIR_NOTEBOOKS = RAIZ_PROYECTO / "notebooks"
 DIR_TESTS = RAIZ_PROYECTO / "tests"
+
+# Si AI_PROJECT_STORAGE_DIR está definido, data y outputs vivirán en esa carpeta externa.
+# Si no está definido, se mantienen dentro de la raíz del proyecto como siempre.
+if STORAGE_DIR_ENV:
+    DIR_DATA = BASE_STORAGE_DIR
+    DIR_OUTPUTS = BASE_STORAGE_DIR / "outputs"
+else:
+    DIR_DATA = RAIZ_PROYECTO / "data"
+    DIR_OUTPUTS = RAIZ_PROYECTO / "outputs"
 
 # ===========================
 # Subdirectorios de data
@@ -126,6 +153,8 @@ def obtener_ruta_dataset(nombre_dataset: str, etapa: str = "raw", extension: str
 
     # Finalmente, construimos la ruta completa combinando el directorio correspondiente a la etapa y el nombre del archivo, y la devolvemos
     # Ej: data/raw/inscritos_2006_2025.csv
+    # En Google Colab con AI_PROJECT_STORAGE_DIR, podría verse así:
+    # /content/drive/MyDrive/ai_project_data/raw/inscritos_2006_2025.csv
     return directorios_validos[etapa] / nombre_archivo
 
 
@@ -192,6 +221,8 @@ def obtener_ruta_salida(nombre_archivo: str, tipo: str = "tablas", subcarpeta: s
 
     # Finalmente, construimos la ruta completa combinando el directorio base y el nombre del archivo, y la devolvemos
     # Ej: outputs/tablas/analisis_inscritos_2006_2025.csv
+    # En Google Colab con AI_PROJECT_STORAGE_DIR, podría verse así:
+    # /content/drive/MyDrive/ai_project_data/outputs/tablas/analisis_inscritos_2006_2025.csv
     return directorio_base / nombre_archivo
 
 
@@ -203,6 +234,7 @@ def listar_directorios_base() -> dict[str, Path]:
 
     return {
         "raiz_proyecto": RAIZ_PROYECTO,
+        "base_storage": BASE_STORAGE_DIR,
         "src": DIR_SRC,
         "data": DIR_DATA,
         "data_raw": DIR_DATA_RAW,
