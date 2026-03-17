@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import os
 import subprocess
 import sys
 
@@ -18,6 +19,10 @@ DRIVE_BASE = Path("/content/drive/MyDrive/ai_project_data")
 RAW_DIR = DRIVE_BASE / "raw"
 PROCESSED_DIR = DRIVE_BASE / "processed"
 OUTPUTS_DIR = DRIVE_BASE / "outputs"
+
+# Esta variable de entorno le indica al sistema de rutas del proyecto
+# que use Google Drive como base para data y outputs en Colab.
+os.environ["AI_PROJECT_STORAGE_DIR"] = str(DRIVE_BASE)
 
 # Dependencias mínimas necesarias para el proyecto
 PAQUETES_BASE = [
